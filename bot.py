@@ -1,54 +1,17 @@
 import requests
 
-#bot_token = "1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ" #@Vaverka_python_testing_bot
+bot_token = "1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ" #@Vaverka_python_testing_bot
 
-#bot api list
-bot_api = "https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/getMe"
-bot_updates = "https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/getUpdates"
-bot_message = "https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/sendMessage"
-
-#get functions
-#bot_api_status = requests.get(bot_api, verify=False)
-#bot_updates_status = requests.get(bot_updates, verify=False)
+root_url=f"https://api.telegram.org/bot{bot_token}/"
 
 
-#create dict
-bot_updates_dict = requests.get(bot_updates).json()
+def get_updates():
+	response=requests.get(f"{root_url}getUpdates")
+	status=response.status_code
+	if status in (200, 201, 202):
+		updates=response.json()
+		return updates
+	else:
+		raise Exception(f"request failed with status {status}")
 
-#printing for functions and dict cheking
-#print ("bot_message:", requests.get (bot_message).json())
-#print ("bot_updates:", requests.get (bot_updates).json())
-#print (bot_updates_dict)
-
-#get last user's message
-last_user_message = bot_updates_dict['result'][-1]['message']['text']
-print ("last_user_message:", last_user_message)
-
-# greeting function
-while True:
-    if last_user_message == 'Привет!':
-        requests.post("https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/sendMessage",
-                        data={"chat_id": "450140685", "text": "Привет, дорогая! Начнем тест?"})
-"""
-    
-    
-
-if last_user_message == 'Да':
-    res = requests.post("https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/sendMessage", data={"chat_id": "450140685", "text": "Поехали!"})
-    bot_updates = "https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/getUpdates"
-    bot_updates_dict = requests.get (bot_updates).json()
-    last_user_message = bot_updates_dict['result'][-1]['message']['text']
-
-#else:
-#    res = requests.post("https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/sendMessage", data={"chat_id": "450140685", "text": "Я вас не понимаю."})
-
-#check user message updates function
-bot_updates = "https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/getUpdates"
-bot_updates_status = requests.get(bot_updates, verify=False)
-bot_updates_dict = requests.get (bot_updates).json()
-last_user_message = bot_updates_dict['result'][-1]['message']['text']
-"""
-
-
-
-
+print(get_updates())
