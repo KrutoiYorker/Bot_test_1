@@ -1,10 +1,10 @@
+import bot_token
 import requests
-
-bot_token = "1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ"  # @Vaverka_python_testing_bot
-
-root_url = f"https://api.telegram.org/bot{bot_token}/"
+import bot_class
 
 
+
+"""
 def get_updates():
     response = requests.get(f"{root_url}getUpdates")
     status = response.status_code
@@ -14,31 +14,50 @@ def get_updates():
     else:
         raise Exception(f"request failed with status {status}")
 
-
 print(get_updates())
-
-def last_user_text():
+"""
+"""
+def last_text():
     updates = get_updates()
     text = updates['result'][-1]['message']['text']
     return text
-print (last_user_text())
+print (last_text())
+
+last_text = last_text()
+if last_text == 'Привет':
+    bot_answer = requests.post("https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/sendMessage", data={'chat_id': '450140685', 'text': 'Привет, дорогая! Начнем тест?'})
+
+
+
+
+def is_bot():
+	updates = get_updates()
+	bot_answered = updates['result'][-1]['message']['from']['is_bot']
+	if bot_answered == True:
+		is_bot = True
+	if bot_answered == False:
+		is_bot = False
+	else:
+		print('Внимание ошибка в функции is_bot')
+	return is_bot
+
+last_text = last_text()
+if last_text == 'Привет':
+
 
 def last_phrase_check():
-	updates = get_updates()
-	is_bot_answered = updates['result'][-1]['message']['from']['is_bot']
-	if is_bot_answered == True:
-		while is_bot_answered == True:
-			print (get_updates().json) #будет ли работать функция без присвоения ее переменной?
-	if is_bot_answered == False:
-		user_answer = last_user_text()
-		if user_answer == 'Привет':
+	is_bot = is_bot()
+	while is_bot == True:
+		updates = get_updates()
+	else:
+		last_text = last_text()
+		if last_text == 'Привет':
 			bot_answer = requests.post("https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/sendMessage", data={'chat_id':'450140685', 'text':'Привет, дорогая! Начнем тест?'})
-		if user_answer == 'Да':
+		if last_text == 'Да':
 			bot_answer = requests.post("https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/sendMessage", data={'chat_id': '450140685', 'text': 'Вопрос №1'})
 		else:
-			raise Exception("ошибка")
-	else:
-		print("Непредвитденнная ошибка")
+			bot_answer = requests.post("https://api.telegram.org/bot1597469725:AAEMw3pImas85whqnMdH0RZsh24KP6K-qVQ/sendMessage", data={'chat_id': '450140685', 'text': 'Чё?'})
 	return (bot_answer)
+"""
 
-print(last_phrase_check().json)
+
