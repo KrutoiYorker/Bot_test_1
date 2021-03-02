@@ -1,11 +1,8 @@
 from . import settings
 import requests
 from . import questions
-import logging
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(filename="log.txt",format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
+logger = setting.logging
 class Bot():
     def __init__(self, name):
         self.name = name
